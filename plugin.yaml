@@ -35,6 +35,21 @@ node_types:
                 creation:
                     implementation: vcloud.server_plugin.server.creation_validation
 
+    cloudify.vcloud.nodes.WindowsServer:
+        derived_from: cloudify.vcloud.nodes.Server
+        properties:
+            use_password:
+                default: true
+        interfaces:
+            cloudify.interfaces.worker_installer:
+                install: windows_agent_installer.windows_agent_installer.tasks.install
+                start: windows_agent_installer.windows_agent_installer.tasks.start
+                stop: windows_agent_installer.windows_agent_installer.tasks.stop
+                uninstall: windows_agent_installer.windows_agent_installer.tasks.uninstall
+                restart: windows_agent_installer.windows_agent_installer.tasks.restart
+            cloudify.interfaces.plugin_installer:
+                install: windows_plugin_installer.windows_plugin_installer.tasks.install
+
     cloudify.vcloud.nodes.Network:
         derived_from: cloudify.nodes.Network
         properties:
